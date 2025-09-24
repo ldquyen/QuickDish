@@ -1,0 +1,30 @@
+Dự án tiếp theo về phần order món ăn, demo cho việc mở quán ăn quy mô nhỏ
+
+2 bảng chính lưu trên MockAPI và 1 bảng dùng để lưu trong ORDER:
+- Menu:
+    MenuID: string     
+    Name: string
+    Description: string
+    Category: string                //Món chính | Món phụ | Đồ uống
+    Price: number
+    Quantity: number 
+    URLImage: string
+    Ingredients: string             //nguyên liệu chi tiết
+    IsActive: boolean
+- Order:
+    OrderID: string
+    Table: string
+    Items: array<ItemDetail>[]
+    TotalAmount: number
+    Status: string                  //Đang xử lý | Đang phục vụ | Đã thanh toán 
+    CreatedAt: date
+    UpdateAt: date
+    Note: string
+- ItemDetail:
+    MenuID: string
+    Name: string
+    Quantity: number
+    Price: number
+    TotalPrice: number
+
+
