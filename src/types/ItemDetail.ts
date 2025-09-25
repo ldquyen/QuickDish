@@ -4,4 +4,5 @@ export interface ItemDetail {
     Quantity: number;
     Price: number;
     TotalPrice: number;
+    IsServed: boolean;
 }

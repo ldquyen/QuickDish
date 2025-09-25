@@ -12,12 +12,10 @@ export default function MenuPage() {
   const [menus, setMenus] = useState<Menu[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [listOrder, setListOrder] = useState<ItemDetail[]>([]);
+  const [listPreOrder, setListPreOrder] = useState<ItemDetail[]>([]);     //set danh sách món ăn cbi đặt
   // Bộ lọc
   const [searchName, setSearchName] = useState("");
   const [category, setCategory] = useState("");
-  const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
-  const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     const fetchMenus = async () => {
@@ -39,10 +37,7 @@ export default function MenuPage() {
   const filteredMenus = menus.filter((menu) => {
     const matchName = menu.Name.toLowerCase().includes(searchName.toLowerCase());
     const matchCategory = category ? menu.Category === category : true;
-    const matchMinPrice = minPrice !== undefined ? menu.Price >= minPrice : true;
-    const matchMaxPrice = maxPrice !== undefined ? menu.Price <= maxPrice : true;
-
-    return matchName && matchCategory && matchMinPrice && matchMaxPrice;
+    return matchName && matchCategory;
   });
 
   if (error) return <div className="text-red-500">{error}</div>;
@@ -60,26 +55,41 @@ export default function MenuPage() {
       <h1 className="text-2xl font-bold mb-6 text-center">Menu</h1>
 
       {/* Bộ lọc */}
-      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Input
-          type="text"
-          placeholder="Tìm món ăn..."
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-        />
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+        {/* Input tìm kiếm - cột 1 */}
+        <div className="col-span-1">
+          <Input
+            type="text"
+            placeholder="Tìm món ăn..."
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            className="w-full"
+          />
+        </div>
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2"
-        >
-          <option value="">Tất cả danh mục</option>
-          <option value="Món chính">Món chính</option>
-          <option value="Món phụ">Món phụ</option>
-          <option value="Đồ uống">Đồ uống</option>
-        </select>
-        <PreOrderMenuDetailModal />
+        {/* Select danh mục - cột 2 */}
+        <div className="col-span-1">
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2"
+          >
+            <option value="">Tất cả danh mục</option>
+            <option value="Món chính">Món chính</option>
+            <option value="Món phụ">Món phụ</option>
+            <option value="Đồ uống">Đồ uống</option>
+          </select>
+        </div>
+
+        {/* Cột trống (có thể dùng col-span-1 nếu cần căn giữa) */}
+        <div className="hidden lg:block" />
+
+        {/* Modal button - cột 4, đẩy sang phải */}
+        <div className="col-span-1 justify-self-end">
+          <PreOrderMenuDetailModal />
+        </div>
       </div>
+
 
       {/* Danh sách món ăn */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

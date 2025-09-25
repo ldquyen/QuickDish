@@ -27,4 +27,10 @@ Dự án tiếp theo về phần order món ăn, demo cho việc mở quán ăn 
     Price: number
     TotalPrice: number
 
-
+- Trang MENU:
+    + trang MENU có api để lấy lên danh sách món ăn, truyền vào MenuCard để hiển thị 
+    + trong MenuCard có nút ORDER 
+    => đặt món sao
+- Trang CHECKOUT:
+    + trang CHECKOUT có nút EDIT của 1 component modal, khi bấm thì truyền data từ CHECKOUT vào để hiển thị,
+    nhưng sau khi update thành công thì làm sao update lại bên trang checkout là cái mới nhất

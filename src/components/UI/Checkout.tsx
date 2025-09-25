@@ -23,12 +23,12 @@ export default function Checkout({ totalAmount }: { totalAmount: number }) {
 
     return (
     <>
-      <Button onPress={onOpen}>Thanh toán</Button>
+      <Button color="success" variant="light" size="sm" onPress={onOpen}>Checkout</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Thông tin chuyển khoản</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Banking information</ModalHeader>
               <ModalBody>
                 <div className="flex justify-center">
                   <div className="p-2 border-4 border-purple-500 rounded-md animate-border-glow">

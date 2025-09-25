@@ -6,13 +6,13 @@ export interface Order {
     Items: ItemDetail[];
     TotalAmount: number;
     Status: OrderStatus;
-    CreatedAt: Date;
-    UpdatedAt: Date;
+    CreatedAt: number;
+    UpdatedAt: number;
     Note?: string;
 }
 
 export enum OrderStatus {
-    Processing = 'Đang xử lý',
-    Serving = 'Đang phục vụ',
-    Paid = 'Đã thanh toán'
+  Processing = "Processing",
+  Serving = "Serving",
+  Paid = "Paid"
 }
