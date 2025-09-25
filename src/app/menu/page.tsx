@@ -6,25 +6,13 @@ import MenuCard from "@/components/UI/MenuCard";
 import { getAllMenus } from "@/libs/menuService";
 import { Input, Spinner } from "@heroui/react";
 import PreOrderMenuDetailModal from "@/components/UI/PreOrderMenuDetailModal";
+import { ItemDetail } from "@/types/ItemDetail";
 
 export default function MenuPage() {
   const [menus, setMenus] = useState<Menu[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-// MenuPage.tsx
-const [selectedMenu, setSelectedMenu] = useState<Menu | null>(null);
-const [isOrderModalOpen, setOrderModalOpen] = useState(false);
-const [orderList, setOrderList] = useState<{ menu: Menu; quantity: number }[]>([]);
-
-// Callback khi người dùng đặt món
-const handleOrder = (menu: Menu) => {
-  setSelectedMenu(menu);
-  setOrderModalOpen(true);
-};
-
-const handleConfirmOrder = (menu: Menu, quantity: number) => {
-  setOrderList((prev) => [...prev, { menu, quantity }]);
-};
+  const [listOrder, setListOrder] = useState<ItemDetail[]>([]);
   // Bộ lọc
   const [searchName, setSearchName] = useState("");
   const [category, setCategory] = useState("");
@@ -91,25 +79,6 @@ const handleConfirmOrder = (menu: Menu, quantity: number) => {
           <option value="Đồ uống">Đồ uống</option>
         </select>
         <PreOrderMenuDetailModal />
-        {/* <input
-          type="number"
-          placeholder="Giá từ"
-          value={minPrice ?? ""}
-          onChange={(e) =>
-            setMinPrice(e.target.value ? parseInt(e.target.value) : undefined)
-          }
-          className="border border-gray-300 rounded-lg px-3 py-2"
-        />
-
-        <input
-          type="number"
-          placeholder="Giá đến"
-          value={maxPrice ?? ""}
-          onChange={(e) =>
-            setMaxPrice(e.target.value ? parseInt(e.target.value) : undefined)
-          }
-          className="border border-gray-300 rounded-lg px-3 py-2"
-        /> */}
       </div>
 
       {/* Danh sách món ăn */}

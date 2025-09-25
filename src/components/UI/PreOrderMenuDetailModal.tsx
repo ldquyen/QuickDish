@@ -14,7 +14,7 @@ export default function PreOrderMenuDetailModal() {
 
   return (
     <>
-      <Button onPress={onOpen}>Open Modal</Button>
+      <Button onPress={onOpen}>Pre order</Button>
       <Modal
         isDismissable={false}
         isKeyboardDismissDisabled={true}
