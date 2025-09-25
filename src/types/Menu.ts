@@ -21,10 +21,10 @@ export interface CreateMenuRequest {
     IsActive: boolean;
 }
 
-export interface UpdateMenuRequest {
+// export interface UpdateMenuRequest {
     
-}
+// }
 
-export interface DeleteMenuRequest {
+// export interface DeleteMenuRequest {
 
-}
+// }
