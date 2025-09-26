@@ -6,13 +6,13 @@ import MenuCard from "@/components/UI/MenuCard";
 import { getAllMenus } from "@/libs/menuService";
 import { Input, Spinner } from "@heroui/react";
 import PreOrderMenuDetailModal from "@/components/UI/PreOrderMenuDetailModal";
-import { ItemDetail } from "@/types/ItemDetail";
+// import { ItemDetail } from "@/types/ItemDetail";
 
 export default function MenuPage() {
   const [menus, setMenus] = useState<Menu[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [listPreOrder, setListPreOrder] = useState<ItemDetail[]>([]);     //set danh sách món ăn cbi đặt
+    // const [listPreOrder, setListPreOrder] = useState<ItemDetail[]>([]);     //set danh sách món ăn cbi đặt
   // Bộ lọc
   const [searchName, setSearchName] = useState("");
   const [category, setCategory] = useState("");
@@ -60,7 +60,7 @@ export default function MenuPage() {
         <div className="col-span-1">
           <Input
             type="text"
-            placeholder="Tìm món ăn..."
+            placeholder="Find name..."
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
             className="w-full"
@@ -74,10 +74,10 @@ export default function MenuPage() {
             onChange={(e) => setCategory(e.target.value)}
             className="w-full border border-gray-300 rounded-lg px-3 py-2"
           >
-            <option value="">Tất cả danh mục</option>
-            <option value="Món chính">Món chính</option>
-            <option value="Món phụ">Món phụ</option>
-            <option value="Đồ uống">Đồ uống</option>
+            <option value="">All category</option>
+            <option value="Main course">Main course</option>
+            <option value="Side dishes">Side dishes</option>
+            <option value="Drinks">Drinks</option>
           </select>
         </div>
 

@@ -5,11 +5,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Avatar,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
 } from "@heroui/react";
 import Link from "next/link";
 
@@ -40,9 +35,27 @@ export default function AppNavbar() {
           <Link
             className="hover:text-secondary"
             color="foreground"
+            href="/menu/manage"
+          >
+            Manage
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            className="hover:text-secondary"
+            color="foreground"
             href="/checkout"
           >
             Checkout
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            className="hover:text-secondary"
+            color="foreground"
+            href="/dashboard"
+          >
+            Dashboard
           </Link>
         </NavbarItem>
       </NavbarContent>

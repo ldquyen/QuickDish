@@ -11,13 +11,14 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import { useState } from "react";
-import { CreateMenuRequest, Menu } from "@/types/Menu";
-import { createMenu } from "@/libs/menuService";
+import { useState, useEffect } from "react";
+import { Menu, CreateMenuRequest } from "@/types/Menu";
+import { updateMenu } from "@/libs/menuService";
 import { useToast } from '@/hooks/useToast';
 
-interface CreateMenuModalProps {
-  onMenuCreate: (newMenu: Menu) => void;
+interface EditMenuModalProps {
+  menu: Menu;
+  onMenuUpdate: (updatedMenu: Menu) => void;
 }
 
 const categories = [
@@ -26,7 +27,7 @@ const categories = [
   { key: "Drinks", label: "Đồ uống" },
 ];
 
-export default function CreateMenuModal({ onMenuCreate }: CreateMenuModalProps) {
+export default function EditMenuModal({ menu, onMenuUpdate }: EditMenuModalProps) {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [formData, setFormData] = useState<CreateMenuRequest>({
     Name: "",
@@ -38,8 +39,23 @@ export default function CreateMenuModal({ onMenuCreate }: CreateMenuModalProps) 
     Ingredients: "",
     IsActive: true,
   });
-  const [isCreating, setIsCreating] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const { showSuccess, showError, showWarning } = useToast();
+
+  useEffect(() => {
+    if (menu) {
+      setFormData({
+        Name: menu.Name,
+        Description: menu.Description,
+        Category: menu.Category,
+        Price: menu.Price,
+        Quantity: menu.Quantity,
+        URLImage: menu.URLImage,
+        Ingredients: menu.Ingredients,
+        IsActive: menu.IsActive,
+      });
+    }
+  }, [menu]);
 
   const handleInputChange = (field: keyof CreateMenuRequest, value: string | number | boolean) => {
     setFormData(prev => ({
@@ -48,50 +64,37 @@ export default function CreateMenuModal({ onMenuCreate }: CreateMenuModalProps) 
     }));
   };
 
-  const handleCreate = async () => {
+  const handleSave = async () => {
     if (!formData.Name.trim() || !formData.Category || formData.Price <= 0) {
       showWarning('Vui lòng điền đầy đủ thông tin bắt buộc');
       return;
     }
 
-    setIsCreating(true);
+    setIsSaving(true);
     try {
-      const newMenu = await createMenu(formData);
-      onMenuCreate(newMenu);
-      
-      // Reset form
-      setFormData({
-        Name: "",
-        Description: "",
-        Category: "",
-        Price: 0,
-        Quantity: 0,
-        URLImage: "",
-        Ingredients: "",
-        IsActive: true,
-      });
-      
-      showSuccess('Tạo món ăn thành công!');
+      const updatedMenu = await updateMenu(menu.MenuID, formData);
+      onMenuUpdate(updatedMenu);
+      showSuccess('Cập nhật món ăn thành công!');
       onOpenChange();
     } catch (error) {
-      console.error('Error creating menu:', error);
-      showError('Có lỗi xảy ra khi tạo món ăn');
+      console.error('Error updating menu:', error);
+      showError('Có lỗi xảy ra khi cập nhật món ăn');
     } finally {
-      setIsCreating(false);
+      setIsSaving(false);
     }
   };
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">
-        Tạo món mới
+      <Button onPress={onOpen} color="secondary" variant="light" size="sm">
+        Sửa
       </Button>
       <Modal isOpen={isOpen} size="2xl" onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Tạo món ăn mới
+                Chỉnh sửa món ăn
               </ModalHeader>
               <ModalBody>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -184,10 +187,10 @@ export default function CreateMenuModal({ onMenuCreate }: CreateMenuModalProps) 
                 </Button>
                 <Button 
                   color="success" 
-                  onPress={handleCreate}
-                  isLoading={isCreating}
+                  onPress={handleSave}
+                  isLoading={isSaving}
                 >
-                  Tạo món ăn
+                  Lưu thay đổi
                 </Button>
               </ModalFooter>
             </>
@@ -197,15 +200,3 @@ export default function CreateMenuModal({ onMenuCreate }: CreateMenuModalProps) 
     </>
   );
 }
-
-/*
- MenuID: string;
-    Name: string;
-    Description: string;
-    Category: string;                // Món chính | Món phụ | Đồ uống
-    Price: number;
-    Quantity: number;
-    URLImage: string;
-    Ingredients: string;             // nguyên liệu chi tiết
-    IsActive: boolean;
-*/
