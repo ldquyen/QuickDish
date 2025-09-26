@@ -9,12 +9,11 @@ import {
     TableRow,
     TableCell,
     Spinner,
-    Button,
     Chip,
     Input,
     Pagination,
 } from "@heroui/react";
-import { Order } from "@/types/Order";
+import { Order, OrderStatus } from "@/types/Order";
 import { getAllOrders } from "@/libs/orderService";
 import Checkout from "@/components/UI/Checkout";
 import EditOrderDrawer from "@/components/UI/EditOrderDrawer";
@@ -135,8 +134,27 @@ export default function CheckoutPage() {
                             <TableCell className="text-center">{new Date(u.CreatedAt * 1000).toLocaleString()}</TableCell>
                             <TableCell className="text-center">{new Date(u.UpdatedAt * 1000).toLocaleString()}</TableCell>
                             <TableCell className="text-center flex gap-2 justify-center">
-                                <EditOrderDrawer />
-                                {u.Status !== "Paid" && ( <Checkout totalAmount={u.TotalAmount} />  )}
+                                <EditOrderDrawer 
+                                    order={u} 
+                                    onOrderUpdate={(updatedOrder) => {
+                                        setOrders(prev => prev.map(order => 
+                                            order.OrderID === updatedOrder.OrderID ? updatedOrder : order
+                                        ));
+                                    }}
+                                />
+                                {u.Status !== "Paid" && ( 
+                                    <Checkout 
+                                        totalAmount={u.TotalAmount} 
+                                        orderId={u.OrderID}
+                                        onPaymentSuccess={() => {
+                                            setOrders(prev => prev.map(order => 
+                                                order.OrderID === u.OrderID 
+                                                    ? { ...order, Status: OrderStatus.Paid, UpdatedAt: Math.floor(Date.now() / 1000) }
+                                                    : order
+                                            ));
+                                        }}
+                                    />  
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}

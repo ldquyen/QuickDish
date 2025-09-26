@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 
 const foodItems = [
   {
@@ -45,7 +44,7 @@ export default function Home() {
         transition={{ delay: 0.5, duration: 0.8 }}
         className="mt-12 flex justify-center"
       >
-        <img
+        <motion.img
           src="https://vgsi.vn/wp-content/uploads/2022/07/diamond-crown-plaza-hai-phong-2-1.jpg"
           alt="Vietnamese Food"
           className="rounded-lg shadow-lg border border-yellow-300 max-w-full"
@@ -65,7 +64,7 @@ export default function Home() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: i * 0.2 }}
           >
-            <img
+            <motion.img
               src={img}
               alt={desc}
               className="w-48 h-48 rounded-lg object-cover shadow-md border border-yellow-300"

@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@heroui/react";
+import {Card, CardHeader, CardFooter, Avatar, Button} from "@heroui/react";
 import { Menu } from "@/types/Menu";
 
 interface Props{
